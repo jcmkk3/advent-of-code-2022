@@ -91,4 +91,4 @@ def parse_round(text: str) -> Round:
 with open("input/day02.txt") as f:
     plays = [parse_round(i) for i in f.readlines()]
 
-sum(p.score for p in plays)
+assert sum(p.score for p in plays) == 12014

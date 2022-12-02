@@ -71,7 +71,6 @@ assert sum(p.score for p in plays) == 11873
 _fixed_plays = {
     (opponent, outcome): player for (opponent, player), outcome in PLAYS.items()
 }
-f
 
 
 def parse_round(text: str) -> Round:

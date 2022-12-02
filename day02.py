@@ -18,7 +18,7 @@ class Outcome(Enum):
 OpponentShape = Shape
 PlayerShape = Shape
 
-PLAYS: dict[tuple[OpponentShape, PlayerShape], Outcome] = {
+RULES: dict[tuple[OpponentShape, PlayerShape], Outcome] = {
     (Shape.ROCK, Shape.ROCK): Outcome.DRAW,
     (Shape.ROCK, Shape.PAPER): Outcome.WIN,
     (Shape.ROCK, Shape.SCISSORS): Outcome.LOSS,
@@ -37,7 +37,7 @@ class Round(NamedTuple):
 
     @property
     def outcome(self):
-        return PLAYS[self]
+        return RULES[self]
 
     @property
     def score(self):
@@ -48,8 +48,8 @@ class Round(NamedTuple):
 
 
 def parse_round(text: str) -> Round:
-    opponent, player = text.strip().split(" ")
-    mapping = {
+    opponent, player = text.strip().split()
+    translate = {
         "A": Shape.ROCK,
         "B": Shape.PAPER,
         "C": Shape.SCISSORS,
@@ -57,25 +57,25 @@ def parse_round(text: str) -> Round:
         "Y": Shape.PAPER,
         "Z": Shape.SCISSORS,
     }
-    return Round(mapping[opponent], mapping[player])
+    return Round(translate[opponent], translate[player])
 
 
 with open("input/day02.txt") as f:
-    plays = [parse_round(i) for i in f.readlines()]
+    plays = [parse_round(s) for s in f.readlines()]
 
-assert sum(p.score for p in plays) == 11873
+assert sum(p.score for p in plays) == 11_873
 
 
 # -------- Part 2 -------------------------------------------------------------
 
-_fixed_plays = {
-    (opponent, outcome): player for (opponent, player), outcome in PLAYS.items()
+_cheat_rules = {
+    (opponent, outcome): player for (opponent, player), outcome in RULES.items()
 }
 
 
 def parse_round(text: str) -> Round:
-    opponent, outcome = text.strip().split(" ")
-    mapping = {
+    opponent, outcome = text.strip().split()
+    translate = {
         "A": Shape.ROCK,
         "B": Shape.PAPER,
         "C": Shape.SCISSORS,
@@ -83,11 +83,11 @@ def parse_round(text: str) -> Round:
         "Y": Outcome.DRAW,
         "Z": Outcome.WIN,
     }
-    opponent, outcome = mapping[opponent], mapping[outcome]
-    return Round(opponent, _fixed_plays[opponent, outcome])
+    opponent, outcome = translate[opponent], translate[outcome]
+    return Round(opponent, _cheat_rules[opponent, outcome])
 
 
 with open("input/day02.txt") as f:
-    plays = [parse_round(i) for i in f.readlines()]
+    plays = [parse_round(s) for s in f.readlines()]
 
-assert sum(p.score for p in plays) == 12014
+assert sum(p.score for p in plays) == 12_014

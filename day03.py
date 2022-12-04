@@ -28,11 +28,11 @@ class Rucksack(NamedTuple):
 with open("input/day03.txt") as f:
     rucksacks = [Rucksack.from_str(s) for s in f.readlines()]
 
-sum(PRIORITIES[r.common_items.pop()] for r in rucksacks)
+assert sum(PRIORITIES[r.common_items.pop()] for r in rucksacks) == 7850
 
 groups = [
     a.unique_items & b.unique_items & c.unique_items
     for a, b, c in zip(rucksacks[::3], rucksacks[1::3], rucksacks[2::3])
 ]
 
-sum(PRIORITIES[g.pop()] for g in groups)
+assert sum(PRIORITIES[g.pop()] for g in groups) == 2581

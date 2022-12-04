@@ -6,7 +6,8 @@ def parse_section(text: str) -> set[int]:
 
 with open("input/day04.txt") as f:
     assignment_pairs = [
-        [parse_section(section) for section in pair.split(",")] for pair in f.readlines()
+        tuple(parse_section(section) for section in pair.split(","))
+        for pair in f.readlines()
     ]
 
 full_overlap = 0

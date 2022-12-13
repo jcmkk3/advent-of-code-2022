@@ -1,15 +1,15 @@
 import itertools
-from enum import Enum
+from enum import IntEnum
 from typing import NamedTuple
 
 
-class Shape(Enum):
+class Shape(IntEnum):
     ROCK = 1
     PAPER = 2
     SCISSORS = 3
 
 
-class Outcome(Enum):
+class Outcome(IntEnum):
     LOSS = 0
     DRAW = 3
     WIN = 6
@@ -23,8 +23,8 @@ RULES: dict[tuple[OpponentShape, PlayerShape], Outcome] = {
     (Shape.ROCK, Shape.PAPER): Outcome.WIN,
     (Shape.ROCK, Shape.SCISSORS): Outcome.LOSS,
     (Shape.PAPER, Shape.PAPER): Outcome.DRAW,
-    (Shape.PAPER, Shape.ROCK): Outcome.LOSS,
     (Shape.PAPER, Shape.SCISSORS): Outcome.WIN,
+    (Shape.PAPER, Shape.ROCK): Outcome.LOSS,
     (Shape.SCISSORS, Shape.SCISSORS): Outcome.DRAW,
     (Shape.SCISSORS, Shape.ROCK): Outcome.WIN,
     (Shape.SCISSORS, Shape.PAPER): Outcome.LOSS,
@@ -41,7 +41,7 @@ class Round(NamedTuple):
 
     @property
     def score(self):
-        return self.player.value + self.outcome.value
+        return self.player + self.outcome
 
 
 # -------- Part 1 -------------------------------------------------------------

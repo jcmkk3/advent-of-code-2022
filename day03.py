@@ -13,7 +13,7 @@ class Rucksack(NamedTuple):
     @classmethod
     def from_str(cls, text: str):
         text = text.strip()
-        split = int(len(text) / 2)
+        split = len(text) // 2
         return cls(text[:split], text[split:])
 
     @property
